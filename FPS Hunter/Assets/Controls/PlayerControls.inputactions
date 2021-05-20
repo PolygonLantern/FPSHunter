@@ -23,7 +23,7 @@
                 },
                 {
                     "name": "Look",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "5d552d1a-48e5-4564-a9c3-6875a9dec687",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -41,6 +41,14 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "753a0df1-aac3-4445-86c2-1b99f702729b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Ready",
+                    "type": "PassThrough",
+                    "id": "67bc2c7a-0589-4af0-802d-c04078c144d7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -198,6 +206,17 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b19ab51f-c2ba-4bb5-a18b-23adbc93a7d2",
+                    "path": "<Keyboard>/r",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Ready",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

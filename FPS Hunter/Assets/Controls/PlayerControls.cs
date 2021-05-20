@@ -36,7 +36,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Look"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""5d552d1a-48e5-4564-a9c3-6875a9dec687"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -54,6 +54,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""753a0df1-aac3-4445-86c2-1b99f702729b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Ready"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""67bc2c7a-0589-4af0-802d-c04078c144d7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -213,6 +221,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b19ab51f-c2ba-4bb5-a18b-23adbc93a7d2"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Ready"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -254,6 +273,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
         m_Game_Sprint = m_Game.FindAction("Sprint", throwIfNotFound: true);
         m_Game_Attack = m_Game.FindAction("Attack", throwIfNotFound: true);
+        m_Game_Ready = m_Game.FindAction("Ready", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -308,6 +328,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Game_Look;
     private readonly InputAction m_Game_Sprint;
     private readonly InputAction m_Game_Attack;
+    private readonly InputAction m_Game_Ready;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
@@ -317,6 +338,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Look => m_Wrapper.m_Game_Look;
         public InputAction @Sprint => m_Wrapper.m_Game_Sprint;
         public InputAction @Attack => m_Wrapper.m_Game_Attack;
+        public InputAction @Ready => m_Wrapper.m_Game_Ready;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -341,6 +363,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Attack.started -= m_Wrapper.m_GameActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnAttack;
+                @Ready.started -= m_Wrapper.m_GameActionsCallbackInterface.OnReady;
+                @Ready.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnReady;
+                @Ready.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnReady;
             }
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
@@ -360,6 +385,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Ready.started += instance.OnReady;
+                @Ready.performed += instance.OnReady;
+                @Ready.canceled += instance.OnReady;
             }
         }
     }
@@ -389,5 +417,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnReady(InputAction.CallbackContext context);
     }
 }
